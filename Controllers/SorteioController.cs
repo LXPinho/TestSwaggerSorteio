@@ -12,7 +12,7 @@ namespace TestSwaggerSorteio.Controllers
     [ApiController]
     public class SorteioController : ControllerBase
     {
-        [HttpGet]
+        [HttpGet("{vibesAcumuladas}")]
         public ActionResult<string> ListarSorteior(int vibesAcumuladas = 0)
         {
             string result = string.Empty;
