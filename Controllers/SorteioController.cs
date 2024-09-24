@@ -11,7 +11,7 @@ namespace TestSwaggerSorteio.Controllers
     public class SorteioController : ControllerBase
     {
         [HttpGet]
-        public ActionResult<List<Sorteios>> ListarSorteior(int vibesAcumuladas = 0)
+        public ActionResult<List<Sorteios>> ListarSorteior(int vibesAcumuladas = 300)
         {
             bool firstTime = true;
             SorteioData sorteioData = SorteioData.getInstance();
