@@ -1,4 +1,5 @@
-﻿using TestSwaggerSorteio.Models;
+﻿using System.Collections.Generic;
+using TestSwaggerSorteio.Models;
 
 namespace TestSwaggerSorteio.Data
 {
@@ -8,7 +9,7 @@ namespace TestSwaggerSorteio.Data
         private static int Id { get; set; } = 0;
         private static int NumeroDoSorteio { get; set; } = 0;
         public static List<Sorteios> ListaSorteios { get; set; } = new List<Sorteios>();
-        private List<ListaNumerosSorteados> ? ListaSorteio { get; set; }
+        private List<ListaNumerosSorteados> ? ListaNumeros { get; set; }
         private int QtdeNumerosSorteados { get; set; } = 0; 
         public static SorteioData getInstance()
         {
@@ -23,21 +24,21 @@ namespace TestSwaggerSorteio.Data
             ListaNumerosSorteados sorteio = new ListaNumerosSorteados();
             sorteio.Data = DateTime.Now;
             sorteio.Id = ++Id;
-            sorteio.listaNumerosSorteados.Add(new NumeroSorteado(sorteio.Id, (new Random()).Next(10000, 999999)));
+            sorteio.ListaNumeros.Add(new NumeroSorteado(sorteio.Id, (new Random()).Next(10000, 999999)));
 
-            if (firstTime || sorteioData.ListaSorteio == null)
+            if (firstTime || sorteioData.ListaNumeros == null)
             {
-                sorteioData.ListaSorteio = new List<ListaNumerosSorteados>();
+                sorteioData.ListaNumeros = new List<ListaNumerosSorteados>();
                 sorteioData.QtdeNumerosSorteados = 0;
             }
 
             ++sorteioData.QtdeNumerosSorteados;
 
-            sorteioData.ListaSorteio.Add(sorteio);
+            sorteioData.ListaNumeros.Add(sorteio);
 
             Sorteios sorteios = new Sorteios();
 
-            sorteios.ListaSorteios = sorteioData.ListaSorteio;
+            sorteios.ListaSorteios = sorteioData.ListaNumeros;
             sorteios.NumeroDoSorteio = NumeroDoSorteio;
             sorteios.QtdeNumerosSorteados = sorteioData.QtdeNumerosSorteados;
 
@@ -63,6 +64,14 @@ namespace TestSwaggerSorteio.Data
         private void addNumeroDoSorteio()
         {
             NumeroDoSorteio++;
+        }
+        public List<Sorteios> ClearAll(int numeroSorteio = 0)
+        {
+            if (numeroSorteio == 0)
+                ListaSorteios.Clear();
+                else
+                    ListaSorteios.RemoveAt(ListaSorteios.FindIndex(s => s.NumeroDoSorteio == numeroSorteio));
+            return ListaSorteios;
         }
     }
 }
